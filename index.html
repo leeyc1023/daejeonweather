@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대전날씨</title>
+    <link rel="stylesheet" href="style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3561288467027274"
+     crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+    <audio id="mainMusic" loop>
+      <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <!-- 햄버거 버튼 -->
+    <!-- 햄버거 버튼 -->
+    <div class="hamburger" onclick="toggleMenu(this)">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+
+    <!-- 슬라이딩 메뉴 -->
+    <div id="slide-menu" class="slide-menu">
+        <div id="emailtitle">문의사항</div>
+        <ul>
+            <li>
+            문의사항은 <a href="#" class="copy-email" onclick="copyEmail()">maenkatvkeo@gmail.com</a> 으로 보내주세요.
+            </li>
+        </ul>
+        <div id="FAQtitle">FAQ</div>
+        <ul>
+            <li class="FAQ" onclick="toggleFAQ()">Q . 왜 실시간으로 반영이 안되죠?</li>
+
+        </ul>
+        <div id="faq-answer" class="faq-answer">
+            A . 실제 데이터는 OpenWeather에서 1~2분 단위로 갱신되므로, '실시간'처럼 보이지만 약간의 시간차가 존재할 수 있습니다.
+        </div>
+        <br>
+        <ul>
+            <li class="FAQ" onclick="toggleFAQ2()">Q .모바일에서 보기가 힘들어요</li>
+
+        </ul>
+        <div id="faq-answer1" class="faq-answer">
+            A . 모바일 환경에서의 가독성이 부족한 점은 인지하고 있으며, 아직 학생의 입장에서 해당 부분에 대해 더 공부하고 있는 중입니다. 충분한 학습 이후 개선해 나가겠습니다. 불편을 드려 죄송합니다
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <h1 class="title">대전날씨</h1>
+        <p id="description"></p>
+        <p id="temperature"></p>
+        <p id="wind"></p>
+        <p id="clock"></p>
+    </div>
+    <button id="musicBtn" onclick="toggleMusic()">🎵 음악 시작</button>
+    <!-- 밤하늘의 별 -->
+    <div class="stars" id="stars"></div>
+    <div id="star-container"></div>
+    <div class="sun" id="sun"></div>
+    <div id="moon" class="moon"></div>
+    <div class="mountain"></div>
+    <script src="main.js"></script>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div id="rain-layer" class="rain"></div>
+</body>
+
+</html>
