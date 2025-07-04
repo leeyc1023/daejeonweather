@@ -48,6 +48,7 @@
 </head>
 
 <body>
+
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T89PTB8N"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -75,6 +76,25 @@
         <span></span>
         <span></span>
     </div>
+    <!-- 일기 예보 버튼 -->
+    
+
+    <!-- 모달 창 -->
+    <div id="weather-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>📍 대전 일기 예보</h2>
+
+            <!-- ✅ 이 아래에 넣으세요 -->
+            <div id="forecast"></div>
+                <!-- ✅ 여기 넣으세요 -->
+                <div id="hourly-forecast-wrapper">
+                <h3>🕒 3시간 간격 예보</h3>
+                <div id="hourly-forecast" class="hourly-grid"></div>
+            </div>
+        </div>
+    </div>
+
     
 
     <!-- 슬라이딩 메뉴 -->
@@ -111,8 +131,12 @@
         <p id="wind"></p>
         <p id="clock"></p>
     </div>
-    <button id="musicBtn" onclick="toggleMusic()">🎵 음악 시작</button>
+
     <!-- 밤하늘의 별 -->
+    <div class="button-row">
+        <button id="musicBtn" onclick="toggleMusic()">🎵 음악 시작</button>
+        <button id="open-weather">📅 일기 예보 보기</button>
+    </div>
     <div class="stars" id="stars"></div>
     <div id="star-container"></div>
     <div class="sun" id="sun"></div>
@@ -123,6 +147,6 @@
     <div class="cloud cloud2"></div>
     <div class="cloud cloud3"></div>
     <div id="rain-layer" class="rain"></div>
-</body>
 
+</body>
 </html>
