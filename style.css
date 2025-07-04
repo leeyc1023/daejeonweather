@@ -416,3 +416,146 @@ body.night .slide-menu * {
   0% { background-position: 0 -100px; }
   100% { background-position: 0 100%; }
 }
+/* 모달 창 내부의 텍스트는 항상 검정색으로 고정 */
+.modal-content,
+.modal-content * {
+  color: black !important;
+}
+/* 모달 기본 설정 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 모달 내부 콘텐츠 */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 10px;
+}
+
+/* 닫기 버튼 */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+}
+.close:hover {
+  color: black;
+}
+#hourly-forecast {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-start;
+  padding: 10px 0;
+}
+
+.hourly-box {
+  width: calc(33.333% - 8px);
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  color: black !important;
+  box-sizing: border-box;
+}
+#hourly-forecast {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-start;
+  padding: 10px 0;
+}
+
+.hourly-box {
+  width: calc(33.333% - 8px);
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  color: black !important;
+  box-sizing: border-box;
+}
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.button-row button {
+  font-size: 14px;
+  padding: 6px 12px;
+  cursor: pointer;
+  border: none;
+  background-color: white;
+  color: black;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+/* 🔁 기존 html, body 전체 스크롤 막는 코드 제거 */
+
+/* ✅ 모달이 열릴 때만 스크롤 비활성화 */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* ✅ 모달 내부 컨텐츠의 최대 높이 설정 */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+
+  /* 추가 ↓↓↓ */
+  max-height: 80vh;
+  overflow-y: auto;
+
+  border-radius: 10px;
+}
+
+body.modal-open {
+  overflow: hidden;
+  padding-right: 0 !important;
+}
+
+/* ✅ 강제로 스크롤바 자체 없애기 */
+body.modal-open::-webkit-scrollbar {
+  display: none;
+}
+html.modal-open {
+  overflow: hidden;
+}
+html.modal-open::-webkit-scrollbar {
+  display: none;
+}
+body {
+  overscroll-behavior: none;  /* 모바일 터치 스크롤 막기 */
+}
+#open-weather {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: 2px solid black;
+  border-radius: 10px;   /* ⭕ 음악 버튼과 동일하게 둥글게 */
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#open-weather:hover {
+  background-color: #f0f0f0;
+}
+
