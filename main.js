@@ -242,6 +242,148 @@ function updateWeatherEffects(weather, clouds) {
   }
 }
 
+function fetchForecast() {
+  fetch('https://api.openweathermap.org/data/2.5/forecast?lat=36.35&lon=127.38&appid=de25b0ba6f000d131cc5acc9bea0077c&units=metric')
+    .then(res => res.json())
+    .then(data => {
+      // ---- 1. 일별 최고/최저 기온 요약 ----
+      const container = document.getElementById('forecast');
+      container.innerHTML = '';
+
+      const dailyTemps = {};
+
+      data.list.forEach(item => {
+        const utcDate = new Date(item.dt * 1000);
+        const dateStr = utcDate.toISOString().split("T")[0];
+
+        if (!dailyTemps[dateStr]) dailyTemps[dateStr] = [];
+
+        dailyTemps[dateStr].push({
+          min: item.main.temp_min,
+          max: item.main.temp_max,
+          icon: item.weather[0].icon,
+          desc: item.weather[0].description,
+          dt: item.dt
+        });
+      });
+
+      const todayUTC = new Date().toISOString().split("T")[0];
+
+      const summary = Object.entries(dailyTemps)
+        .filter(([date, _]) => date !== todayUTC)
+        .slice(0, 5)
+        .map(([date, temps]) => {
+          const minTemp = Math.min(...temps.map(t => t.min));
+          const maxTemp = Math.max(...temps.map(t => t.max));
+          const first = temps.sort((a, b) => a.dt - b.dt)[0];
+
+          const dateObj = new Date(date);
+          const year = dateObj.getFullYear();
+          const month = dateObj.getMonth() + 1;
+          const day = dateObj.getDate();
+          const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][dateObj.getDay()];
+          const formattedDate = `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
+
+          return {
+            date: formattedDate,
+            minTemp,
+            maxTemp,
+            icon: first.icon,
+            desc: first.desc
+          };
+        });
+
+
+      summary.forEach(day => {
+        container.innerHTML += `
+          <div style="margin-bottom: 10px;">
+            <strong>${day.date}</strong>: 최저온도 ${day.minTemp.toFixed(1)}°C ~ 최고온도 ${day.maxTemp.toFixed(1)}°C, ${translateWeatherDescription(day.desc)}
+            <img src="https://openweathermap.org/img/wn/${day.icon}.png" alt="${day.desc}">
+          </div>
+        `;
+      });
+
+      // ---- 2. 3시간 간격 예보 ----
+      const hourlyContainer = document.getElementById("hourly-forecast");
+      hourlyContainer.innerHTML = ""; // <h3>는 HTML에서 따로 넣기
+
+      const upcomingHours = data.list
+        .filter(item => new Date(item.dt * 1000) > new Date())
+        .slice(0, 8);
+
+      upcomingHours.forEach(item => {
+        const time = new Date(item.dt * 1000);
+        const hourLabel = `${time.getMonth() + 1}월 ${time.getDate()}일 ${time.getHours()}시`;
+        const temp = item.main.temp.toFixed(1);
+        const desc = translateWeatherDescription(item.weather[0].description);
+        const icon = item.weather[0].icon;
+
+        hourlyContainer.innerHTML += `
+          <div class="hourly-box">
+            <div><strong>${hourLabel}</strong></div>
+            <img src="https://openweathermap.org/img/wn/${icon}.png" alt="${desc}">
+            <div>${temp}°C, ${desc}</div>
+          </div>
+        `;
+      });
+    })
+    .catch(error => console.error('날씨 데이터 불러오기 오류:', error));
+}
+
+
+// 📅 일기예보 모달 열기/닫기 처리
+document.addEventListener("DOMContentLoaded", () => {
+  const openBtn = document.getElementById("open-weather");
+  const modal = document.getElementById("weather-modal");
+  const closeBtn = modal.querySelector(".close");
+
+  if (openBtn && modal && closeBtn) {
+    openBtn.addEventListener("click", () => {
+      modal.style.display = "block";
+      document.documentElement.classList.add("modal-open"); // <html> 태그
+      openForecastModal();
+    });
+
+
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");  // ✅ 스크롤 다시 허용
+      closeForecastModal();
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+        document.body.classList.remove("modal-open");
+        closeForecastModal(); // 여기서도 함수 사용
+      }
+    });
+
+  }
+});
+
+function openForecastModal() {
+  document.getElementById('weather-modal').style.display = 'block';
+  document.body.style.overflow = 'hidden'; // ✅ 외부 스크롤 막기
+}
+
+function closeForecastModal() {
+  document.getElementById('weather-modal').style.display = 'none';
+  document.body.style.overflow = 'auto';   // ✅ 외부 스크롤 다시 허용
+}
+
+
+
+
+
+
+
+// 최초 실행
+fetchForecast();
+
+// 10분마다 갱신 (600,000ms)
+setInterval(fetchForecast, 600000);
+
 
 
 // 페이지 로드시 1회 실행
