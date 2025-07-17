@@ -44,7 +44,7 @@ body {
         79% 77%, 87% 63%, 95% 80%, 100% 65%, 100% 100%, 0% 100%
     );
 
-    z-index: 0;
+    z-index: 10;
 }
 
 /*태양*/
@@ -333,7 +333,7 @@ body.night {
   background-position: 0 0, 12px 12px;
   opacity: 0;
   transition: opacity 1s ease;
-  z-index: 0;
+  z-index: 0.5;
 }
 
 body.night .slide-menu {
@@ -404,13 +404,33 @@ body.night .slide-menu * {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  background-image: linear-gradient(transparent, rgba(255, 255, 255, 0.4));
-  background-size: 2px 100px;
-  animation: rain 0.5s linear infinite;
-  opacity: 0;
   z-index: 2;
+  opacity: 0;
   transition: opacity 0.5s ease;
 }
+
+.rain::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.2) 0px,
+    rgba(255, 255, 255, 0.2) 2px,
+    transparent 2px,
+    transparent 10px
+  );
+  animation: rainFall 0.4s linear infinite;
+}
+
+@keyframes rainFall {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
 
 @keyframes rain {
   0% { background-position: 0 -100px; }
@@ -559,3 +579,55 @@ body {
   background-color: #f0f0f0;
 }
 
+body.rainy::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(2px);
+  background: linear-gradient(to bottom, #5f7481, #a0b4c1);
+  z-index: 0.9;
+  pointer-events: none;
+}
+#rain-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+.raindrop {
+  position: absolute;
+  width: 2px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  animation: fall linear;
+}
+@keyframes fall {
+  0% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0.2;
+  }
+}
+.raindrop.fade-out {
+  animation: fadeOutFall 1s forwards;
+}
+
+@keyframes fadeOutFall {
+  0% {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh);
+  }
+}
