@@ -237,9 +237,20 @@ function updateWeatherEffects(weather, clouds) {
   });
 
   // 비 표시
-  if (rainLayer) {
-    rainLayer.style.opacity = isRaining ? 0.4 : 0;
+  if (isRaining) {
+  createRainParticles();
+  } else {
+    const container = document.getElementById('rain-particles');
+    if (container) {
+      const drops = container.querySelectorAll('.raindrop');
+      drops.forEach(drop => {
+        drop.classList.add('fade-out');
+        drop.addEventListener('animationend', () => drop.remove());
+      });
+    }
   }
+
+
 }
 
 function fetchForecast() {
@@ -373,6 +384,27 @@ function closeForecastModal() {
 }
 
 
+function createRainParticles() {
+  const container = document.getElementById('rain-particles');
+  if (!container) return;
+
+
+  for (let i = 0; i < 120; i++) {
+    const drop = document.createElement('div');
+    drop.className = 'raindrop';
+    
+    drop.style.left = Math.random() * 100 + 'vw';
+
+    // ❗ 비 입자가 상단에서 일제히 시작하지 않도록
+    drop.style.top = (Math.random() * -1000) + 'px';
+
+    // 속도·타이밍 랜덤 설정
+    drop.style.animationDuration = 0.5 + Math.random() * 1.5 + 's';
+    drop.style.animationDelay = Math.random() * 1 + 's';
+
+    container.appendChild(drop);
+  }
+}
 
 
 
