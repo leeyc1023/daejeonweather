@@ -43,6 +43,7 @@ function translateWeatherDescription(desc) {
         "light rain": "약한 비",
         "moderate rain": "보통 비",
         "heavy intensity rain": "강한 비",
+        "very heavy rain" : "매우 강한 비",
         "shower rain": "소나기",
         "rain": "비",
         "thunderstorm": "천둥번개",
