@@ -512,6 +512,7 @@ body.night .slide-menu * {
   display: flex;
   gap: 10px;
   margin-top: 10px;
+  z-index: 5;
 }
 
 .button-row button {
@@ -523,6 +524,7 @@ body.night .slide-menu * {
   color: black;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 5;
 }
 /* 🔁 기존 html, body 전체 스크롤 막는 코드 제거 */
 
